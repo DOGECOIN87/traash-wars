@@ -1,0 +1,92 @@
+{
+  "version": "0.1.0",
+  "name": "pvp_game",
+  "address": "FILL_ME_IN_WITH_PROGRAM_ID",
+  "metadata": {
+    "address": "FILL_ME_IN_WITH_PROGRAM_ID"
+  },
+  "instructions": [
+    {
+      "name": "createMatch",
+      "accounts": [
+        { "name": "platformConfig", "isMut": true, "isSigner": false },
+        { "name": "gameMatch", "isMut": true, "isSigner": false },
+        { "name": "escrow", "isMut": true, "isSigner": false },
+        { "name": "player1", "isMut": true, "isSigner": true },
+        { "name": "systemProgram", "isMut": false, "isSigner": false }
+      ],
+      "args": [
+        { "name": "stakeAmount", "type": "u64" },
+        { "name": "matchId", "type": { "array": ["u8", 32] } }
+      ]
+    },
+    {
+      "name": "joinMatch",
+      "accounts": [
+        { "name": "platformConfig", "isMut": false, "isSigner": false },
+        { "name": "gameMatch", "isMut": true, "isSigner": false },
+        { "name": "escrow", "isMut": true, "isSigner": false },
+        { "name": "player2", "isMut": true, "isSigner": true },
+        { "name": "systemProgram", "isMut": false, "isSigner": false }
+      ],
+      "args": []
+    },
+    {
+      "name": "cancelMatch",
+      "accounts": [
+        { "name": "gameMatch", "isMut": true, "isSigner": false },
+        { "name": "escrow", "isMut": true, "isSigner": false },
+        { "name": "player1", "isMut": true, "isSigner": true },
+        { "name": "systemProgram", "isMut": false, "isSigner": false }
+      ],
+      "args": []
+    },
+    {
+      "name": "claimWinnings",
+      "accounts": [
+        { "name": "platformConfig", "isMut": false, "isSigner": false },
+        { "name": "gameMatch", "isMut": true, "isSigner": false },
+        { "name": "escrow", "isMut": true, "isSigner": false },
+        { "name": "treasury", "isMut": true, "isSigner": false },
+        { "name": "winner", "isMut": true, "isSigner": true },
+        { "name": "systemProgram", "isMut": false, "isSigner": false }
+      ],
+      "args": []
+    }
+  ],
+  "accounts": [
+    {
+      "name": "platformConfig",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          { "name": "totalMatches", "type": "u64" },
+          { "name": "matchesCompleted", "type": "u64" },
+          { "name": "totalVolume", "type": "u64" },
+          { "name": "totalFeesCollected", "type": "u64" },
+          { "name": "feeBps", "type": "u16" },
+          { "name": "paused", "type": "bool" }
+        ]
+      }
+    },
+    {
+      "name": "gameMatch",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          { "name": "matchId", "type": { "array": ["u8", 32] } },
+          { "name": "player1", "type": "publicKey" },
+          { "name": "player2", "type": "publicKey" },
+          { "name": "stakeAmount", "type": "u64" },
+          { "name": "status", "type": "u8" },
+          { "name": "winner", "type": "publicKey" },
+          { "name": "createdAt", "type": "i64" },
+          { "name": "startedAt", "type": "i64" },
+          { "name": "endedAt", "type": "i64" },
+          { "name": "feeAmount", "type": "u64" },
+          { "name": "prizeAmount", "type": "u64" }
+        ]
+      }
+    }
+  ]
+}

@@ -1,3 +1,7 @@
+// This menu contains interactive state, animations and wallet prompts. It must
+// run purely on the client, hence the `use client` directive at the top.
+'use client';
+
 import React, { useState, useEffect, useRef } from 'react';
 import { GameConfig, GameState } from '../types';
 import { PRESET_COLORS, BOT_SKINS } from '../constants';
